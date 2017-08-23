@@ -1,0 +1,28 @@
+.b-login-form
+
+  &__head
+  	color: #000
+
+  &__mode
+    cursor: pointer
+    color: green
+    text-decoration: underline
+
+  &__trigger
+    color: #000
+
+  &__login,
+  &__registration
+    display: none
+  
+  &.m-login
+    .b-login-form__login
+      display: block
+    .b-login-form__registration
+      display: none
+
+  &.m-registration
+    .b-login-form__registration
+      display: block
+    .b-login-form__login
+      display: none
