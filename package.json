@@ -6,7 +6,8 @@
   "scripts": {
     "frontend": "node_modules/.bin/webpack --config webpack.config.js",
     "server": "nodemon -e ts --exec \"npm run build-backend\"",
-    "build-backend": "tsc || echo done && node distr/index.js"
+    "build-backend": "tsc || echo done && node distr/index.js",
+    "deploy": ""
   },
   "author": "",
   "license": "ISC",
