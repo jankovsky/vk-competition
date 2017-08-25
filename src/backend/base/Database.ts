@@ -21,7 +21,7 @@ class Database extends Sequelize{
 
     constructor(database, user, password, settings) {
 
-        if (Database._instance) {
+        if (!Database._instance) {
             throw new Error("Error: Instantiation failed: Use Database.getInstance() instead of new.");
         } else {
             super(database, user, password, settings);

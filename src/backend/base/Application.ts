@@ -1,6 +1,5 @@
 import Config from '../config';
 import ApiRoutes from '../routes/ApiRoutes';
-import registrationRoute from '../routes/Registration';
 import loginRoute from '../routes/Login';
 import logoutRoute from '../routes/Logout';
 import * as express from 'express';
@@ -37,7 +36,6 @@ export default class App {
         this.app.use(passport.initialize());
         this.app.use(passport.session());
 
-
         // react hot-reloader
         if (mode && mode === 'develop') {
             let webpack,
@@ -67,9 +65,6 @@ export default class App {
 
         // init root route
         this.app.use('/', router);
-
-        // registration route
-        this.app.use('/registration', registrationRoute);
 
         // login route
         this.app.use('/login', loginRoute);
