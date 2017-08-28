@@ -23,7 +23,7 @@ class Authenticator {
                 if (result) {
                     done(null, userIdAndRoleId.username);
                 } else {
-                    done(true, false);
+                    done({status: 'error', message: 'Incorrect username or password'}, false);
                 }
             });
         });

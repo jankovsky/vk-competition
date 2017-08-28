@@ -5,12 +5,9 @@ let LoginRoute = Router();
 
 LoginRoute.route('/')
     .post(Authenticator.auth, (req, res, next) => {
-        res.send('Loged in POST!');
-    }, (req, res, err) => {
-        console.log('Error');
-        console.log(req);
-        console.log(res);
-        console.log(err);
+        res.send({status: "success", message: "Successfull auth"});
+    }, (err, req, res, info) => {
+        res.send(err);
     });
 
 export default LoginRoute;
