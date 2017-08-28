@@ -20,7 +20,7 @@ Npm run build-backend, npm run dev-server.
 
 # Общая архитектура
 
-# БД
+### БД
 
 MySql - 3 инстанса:
 
@@ -42,37 +42,37 @@ Redis - 1 инстанс:
 Как синхронизировать этот кеш при отказе Redis на какое то время?
 Если Redis вообще лежит - идем в MySql.
 
-# Серверы приложений
+### Серверы приложений
 
 На платформе nodejs стартуем приложение на стольки серверах сколько посчитаем нужным.
 На каждом сервере будет работать PM2 который будет выступать в роли балансировщика между запущенными 
 NodeJs процессами (сумарное число которых = количеству ядер на сервере).
  
-# Nginx
+### Nginx
 
 На nginx задействован upstream в котором внесены ip всех наших серверов приложений
 с nodejs-ами. И nginx задействует каждый внесенный сервер по очереди поступления запросов.
 
 # API
 
-Регистрация
+### Регистрация
 
-host:3333/registration/
+> host:3333/registration/
 
-x-www-form-urlencoded
-username: 'string'
-password: 'string'
-isCustomer: 0 or 1
+> x-www-form-urlencoded
+> username: 'string'
+> password: 'string'
+> isCustomer: 0 or 1
 
-Логин
+### Логин
 
-host:3333/login
+> host:3333/login
 
-x-www-form-urlencoded
-username: 'string'
-password: 'string'
+> x-www-form-urlencoded
+> username: 'string'
+> password: 'string'
 
-Логаут
+### Логаут
 
-host:3333/logout
+> host:3333/logout
 
