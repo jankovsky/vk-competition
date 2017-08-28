@@ -59,18 +59,18 @@ NodeJs процессами (сумарное число которых = кол
 
 > host:3333/registration/
 
-> x-www-form-urlencoded
-> username: 'string'
-> password: 'string'
+> x-www-form-urlencoded <br />
+> username: 'string' <br />
+> password: 'string' <br />
 > isCustomer: 0 or 1
 
 ### Логин
 
 > host:3333/login
 
-> x-www-form-urlencoded
-> username: 'string'
-> password: 'string'
+> x-www-form-urlencoded <br />
+> username: 'string' <br />
+> password: 'string' <br />
 
 ### Логаут
 
