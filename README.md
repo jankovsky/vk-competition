@@ -52,3 +52,27 @@ NodeJs процессами (сумарное число которых = кол
 
 На nginx задействован upstream в котором внесены ip всех наших серверов приложений
 с nodejs-ами. И nginx задействует каждый внесенный сервер по очереди поступления запросов.
+
+# API
+
+Регистрация
+
+host:3333/registration/
+
+x-www-form-urlencoded
+username: 'string'
+password: 'string'
+isCustomer: 0 or 1
+
+Логин
+
+host:3333/login
+
+x-www-form-urlencoded
+username: 'string'
+password: 'string'
+
+Логаут
+
+host:3333/logout
+
