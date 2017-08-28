@@ -19,13 +19,6 @@ export default class User {
                     notEmpty: true
                 }
             },
-            firstname: {
-                type: Sequelize.STRING,
-                allowNull: true,
-                validate: {
-                    notEmpty: false
-                }
-            },
             password: {
                 type: Sequelize.STRING,
                 allowNull: false,
@@ -33,21 +26,35 @@ export default class User {
                     notEmpty: true
                 }
             },
-            type: {
-                type: Sequelize.BOOLEAN,
+            isCustomer: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
+            },
+            amount: {
+                type: Sequelize.INTEGER,
                 allowNull: true,
                 validate: {
                     notEmpty: false
                 }
             },
-            date: {
-                type: Sequelize.BIGINT,
+            email: {
+                type: Sequelize.STRING,
                 allowNull: true,
                 validate: {
                     notEmpty: false
                 }
             },
-            phone: {
+            name: {
+                type: Sequelize.STRING,
+                allowNull: true,
+                validate: {
+                    notEmpty: false
+                }
+            },
+            surname: {
                 type: Sequelize.STRING,
                 allowNull: true,
                 validate: {
@@ -83,16 +90,17 @@ export default class User {
         });
     }
 
-    public createUser (username: string, password: string, type: number, callback: Function) {
-        if (!username || !password || !type) {
+    public createUser (username: string, password: string, isCustomer: number, callback: Function) {
+        if (!username || !password || !isCustomer) {
             console.log('Error userdata');
+            return false;
         } else {
             Bcrypt.genSalt(10, (err, salt) => {
                 Bcrypt.hash(password, salt, (err, hash) => {
                     this.user.create({
                         username: username,
                         password: hash,
-                        type: type
+                        isCustomer: isCustomer
                     }).then(callback);
                 });
             });

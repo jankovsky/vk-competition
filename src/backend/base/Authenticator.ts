@@ -36,7 +36,6 @@ class Authenticator {
                     } else {
                         done(null, false);
                     }
-
                 });
             }
         });
@@ -77,16 +76,12 @@ class Authenticator {
 
         this.UserModel.getUserByName(username).then((result) => {
             if (result) {
-                Bcrypt.genSalt(10, (err, salt) => {
-                    Bcrypt.hash(password, salt, (err, hash) => {
-                        Bcrypt.compare(result.get('password'), hash, (err, res) => {
-                            if (err) {
-                                callback(false);
-                            } else {
-                                callback(true);
-                            }
-                        });
-                    });
+                Bcrypt.compare(password, result.get('password'), (err, isMatch) => {
+                    if (isMatch) {
+                        callback(true);
+                    } else {
+                        callback(false);
+                    }
                 });
             } else {
                 callback(false);

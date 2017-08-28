@@ -7,9 +7,9 @@ import * as Sequelize from 'sequelize';
 class Database extends Sequelize{
 
     private static _instance: Database = new Database(
-        Config.basic.database,
-        Config.basic.user,
-        Config.basic.password,
+        Config.basic.mysql.systemDb.name,
+        process.env.DB_USER,
+        process.env.DB_PASSWORD,
         {
             dialect: 'mysql',
             pool: {
@@ -21,7 +21,7 @@ class Database extends Sequelize{
 
     constructor(database, user, password, settings) {
 
-        if (!Database._instance) {
+        if (Database._instance) {
             throw new Error("Error: Instantiation failed: Use Database.getInstance() instead of new.");
         } else {
             super(database, user, password, settings);
