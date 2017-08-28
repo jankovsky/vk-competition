@@ -5,7 +5,7 @@ let LoginRoute = Router();
 
 LoginRoute.route('/')
     .post(Authenticator.auth, (req, res, next) => {
-        res.send({status: "success", message: "Successfull auth"});
+        next();
     }, (err, req, res, info) => {
         res.send(err);
     });

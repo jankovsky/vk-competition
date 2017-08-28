@@ -20,8 +20,18 @@ class Authenticator {
 
         Passport.serializeUser((userIdAndRoleId: UserIdAndRoleId, done) => {
             this.authUser(userIdAndRoleId.username, userIdAndRoleId.password, (result) => {
+                console.log(result);
                 if (result) {
-                    done(null, userIdAndRoleId.username);
+                    done({
+                        status: 'success',
+                        message: 'Success login',
+                        data: {
+                            id: result.id,
+                            username: result.username,
+                            isCustomer: result.isCustomer,
+                            email: result.email
+                        }
+                    }, true);
                 } else {
                     done({status: 'error', message: 'Incorrect username or password'}, false);
                 }
@@ -32,7 +42,7 @@ class Authenticator {
             if (userIdAndRoleId) {
                 this.UserModel.getUserByName(userIdAndRoleId).then((result) => {
                     if (result) {
-                        done(null, userIdAndRoleId);
+                        done(null, true);
                     } else {
                         done(null, false);
                     }
@@ -72,13 +82,20 @@ class Authenticator {
     }
 
     public authUser (username: string, password: string, callback: Function) {
-        if (!username || !password) return false;
+        if (!username || !password) {
+            return false;
+        }
 
         this.UserModel.getUserByName(username).then((result) => {
             if (result) {
                 Bcrypt.compare(password, result.get('password'), (err, isMatch) => {
                     if (isMatch) {
-                        callback(true);
+                        callback({
+                            id: result.get('id'),
+                            username: result.get('username'),
+                            isCustomer: result.get('isCustomer'),
+                            email: result.get('email')
+                        });
                     } else {
                         callback(false);
                     }

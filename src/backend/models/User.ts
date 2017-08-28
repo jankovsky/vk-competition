@@ -1,5 +1,5 @@
 import * as Sequelize from 'sequelize';
-import Database from '../base/Database';
+import Database from '../base/SystemDatabase';
 import * as Bcrypt from 'bcrypt';
 
 export default class User {
@@ -86,6 +86,20 @@ export default class User {
         return this.user.find({
             where: {
                 id: id
+            },
+            attributes: {
+                exclude: ['password']
+            }
+        });
+    }
+
+    public getUserByUserName (name: string) {
+        return this.user.find({
+            where: {
+                name: name
+            },
+            attributes: {
+                exclude: ['password']
             }
         });
     }

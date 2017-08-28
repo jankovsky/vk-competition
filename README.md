@@ -5,7 +5,7 @@ node_modules/.bin/typings install dt~node --global --save
 npm run frontend
 
 # Start server
-npm run server
+DB_USER=system_username DB_PASSWORD=user_password npm run server
 
 # Copy files on server
 scp distr/index.js user@185.68.93.36:/var/www/html/js/index.js
@@ -55,7 +55,7 @@ NodeJs процессами (сумарное число которых = кол
 
 # API
 
-### Регистрация
+### Регистрация POST
 
 > host:3333/registration/
 
@@ -64,7 +64,7 @@ NodeJs процессами (сумарное число которых = кол
 > password: 'string' <br />
 > isCustomer: 0 or 1
 
-### Логин
+### Логин POST
 
 > host:3333/login
 
@@ -72,7 +72,15 @@ NodeJs процессами (сумарное число которых = кол
 > username: 'string' <br />
 > password: 'string' <br />
 
-### Логаут
+### Логаут GET
 
 > host:3333/logout
 
+### Разместить заказ POST
+
+> host:3333/api/order
+
+> x-www-form-urlencoded <br />
+> amount: 'number' <br />
+> headText: 'string' <br />
+> text: 'string' <br />
