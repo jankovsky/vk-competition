@@ -93,7 +93,9 @@ NodeJs процессами (сумарное число которых = кол
 
 > host:3333/api/orders?offset=0&limit=3
 
+### Получить заказы по id пользователя
 
+> host:3333/api/myorders?offset=0&limit=5
 
 
 

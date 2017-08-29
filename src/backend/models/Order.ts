@@ -157,9 +157,26 @@ export default class Order {
         }
 
         queryParams['limit'] = limit ? limit / 2 : Config.basic.defaultRecordsPerPage / 2;
-console.log(queryParams);
         promisesStack.push(this.order1.findAll(queryParams), this.order2.findAll(queryParams));
 
         return Promise.all(promisesStack);
+    }
+
+    public getOrdersByUserId(id: number, offset: number, limit: number) {
+        let targetDb;
+
+        if (id % 2) {
+            targetDb = this.order1;
+        } else {
+            targetDb = this.order2;
+        }
+
+        return targetDb.findAll({
+            where: {
+                customer: id
+            },
+            limit: limit,
+            offset: offset
+        });
     }
 }

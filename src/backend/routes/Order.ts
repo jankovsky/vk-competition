@@ -57,4 +57,19 @@ OrderRoute.route('/orders')
         });
     });
 
+OrderRoute.route('/myorders')
+    .get(Authenticator.isAuthenticated, (req, res, next) => {
+        let offset,
+            limit;
+
+        if (req.user.id && req.query.offset && req.query.limit) {
+            offset = parseInt(req.query.offset, 10);
+            limit = parseInt(req.query.limit, 10);
+
+            OrderModel.getOrdersByUserId(parseInt(req.user.id, 10), offset, limit).then((result) => {
+                res.status(200).json(result);
+            });
+        }
+    });
+
 export default OrderRoute;
