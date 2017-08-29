@@ -1,9 +1,11 @@
 import {Router} from 'express';
 import Order from '../models/Order';
+import User from '../models/User';
 import Authenticator from '../base/Authenticator';
 
 let OrderRoute = Router(),
-    OrderModel = new Order();
+    OrderModel = new Order(),
+    UserModel = new User();
 
 OrderRoute.route('/order')
     .post(Authenticator.isAuthenticated, (req, res, next) => {
@@ -20,14 +22,14 @@ OrderRoute.route('/order')
         } else {
             res.send({ status: 'error', message: 'Need to be a customer' });
         }
-    });
-
-OrderRoute.route('/order/:id')
+    })
     .get(Authenticator.isAuthenticated, (req, res, next) => {
-        // OrderModel.getUserById(req.params.id).then((result) => {
-        //     res.send(result);
-        // });
-        res.send('successfull get by id query');
+        let user_id = parseInt(req.query.user_id),
+            order_id = parseInt(req.query.order_id);
+
+        OrderModel.getTargetOrder(user_id, order_id).then((result) => {
+            res.status(200).json(result)
+        });
     });
 
 OrderRoute.route('/orders')
@@ -70,6 +72,32 @@ OrderRoute.route('/myorders')
                 res.status(200).json(result);
             });
         }
+    });
+
+OrderRoute.route('/execorder')
+    .post(Authenticator.isAuthenticated, (req, res, next) => {
+        let user_id = parseInt(req.user.id),
+            order_id = parseInt(req.body.order_id),
+            customer_id = parseInt(req.body.customer_id);
+
+        UserModel.isCustomer(user_id).then((result) => {
+            if (!result.get('isCustomer')) {
+                OrderModel.execOrder(user_id, order_id, customer_id).then((result) => {
+                    let message = {};
+
+                    if (!result) {
+                        message['status'] = 'success';
+                        message['message'] = 'You successfuly take this order';
+                    } else {
+                        message['status'] = result.status;
+                        message['message'] = result.message;
+                    }
+                    res.status(200).json(message);
+                });
+            } else {
+                res.status(200).json({ status: 'error', message: 'User must be a not customer' });
+            }
+        });
     });
 
 export default OrderRoute;

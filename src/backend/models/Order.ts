@@ -179,4 +179,57 @@ export default class Order {
             offset: offset
         });
     }
+
+    public getTargetOrder(user_id: number, order_id: number) {
+        let targetDb;
+
+        if (user_id % 2) {
+            targetDb = this.order1;
+        } else {
+            targetDb = this.order2;
+        }
+
+        return targetDb.findOne({
+            where: {
+                customer: user_id,
+                id: order_id
+            }
+        });
+    }
+
+    public execOrder(user_id: number, order_id: number, customer_id: number) {
+        let targetDb;
+
+        if (customer_id % 2) {
+            targetDb = this.order1;
+        } else {
+            targetDb = this.order2;
+        }
+
+        return targetDb.findOne({
+            where: {
+                customer: customer_id,
+                id: order_id
+            }
+        }).then((result) => {
+            if (!result.get('contractor')) {
+                targetDb.upsert({
+                    id: order_id,
+                    contractor: user_id,
+                    amount: result.get('amount'),
+                    customer: result.get('customer'),
+                    text: result.get('text'),
+                    headText: result.get('headText'),
+                    status: 1,
+                    time: result.get('time'),
+                    id_prefix: result.get('id_prefix')
+                });
+            } else {
+                return {
+                    status: 'error',
+                    message: 'The order is already booked'
+                };
+            }
+        });
+    }
 }

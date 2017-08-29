@@ -89,16 +89,25 @@ NodeJs процессами (сумарное число которых = кол
 > headText: 'string' <br />
 > text: 'string' <br />
 
-### Получить заказы
+### Получить заказы GET
 
 > host:3333/api/orders?offset=0&limit=3
 
-### Получить заказы по id пользователя
+### Получить заказы добавленные мной GET
 
 > host:3333/api/myorders?offset=0&limit=5
 
+### Получить определенный заказ по user_id и order_id GET
 
+> host:3333/api/order?user_id=111&order_id=10
 
+### Взять заказ в исполнение POST
+
+> host:3333/api/execorder
+
+> x-www-form-urlencoded <br />
+> order_id: 'number' <br />
+> customer_id: 'number' <br />
 
 
 

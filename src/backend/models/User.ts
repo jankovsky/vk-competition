@@ -110,6 +110,14 @@ export default class User {
         }
     }
 
+    public isCustomer (user_id: number) {
+        return this.user.find({
+            where: {
+                id: user_id
+            }
+        });
+    }
+
     public editUser (id: number, params) {
         let query = [];
 
