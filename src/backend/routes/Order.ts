@@ -1,6 +1,5 @@
 import {Router} from 'express';
 import Order from '../models/Order';
-import User from '../models/User';
 import Authenticator from '../base/Authenticator';
 
 let OrderRoute = Router(),

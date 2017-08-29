@@ -88,3 +88,17 @@ NodeJs процессами (сумарное число которых = кол
 > amount: 'number' <br />
 > headText: 'string' <br />
 > text: 'string' <br />
+
+
+
+
+
+
+
+
+
+
+
+### Redis conf MacOs
+
+> nano /usr/local/etc/redis.conf
