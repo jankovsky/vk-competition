@@ -20,29 +20,29 @@ class Authenticator {
 
         Passport.serializeUser((userIdAndRoleId: UserIdAndRoleId, done) => {
             this.authUser(userIdAndRoleId.username, userIdAndRoleId.password, (result) => {
-                console.log(result);
                 if (result) {
-                    done({
-                        status: 'success',
-                        message: 'Success login',
-                        data: {
-                            id: result.id,
-                            username: result.username,
-                            isCustomer: result.isCustomer,
-                            email: result.email
-                        }
-                    }, true);
+                    done(null, {
+                        id: result.id,
+                        username: result.username,
+                        isCustomer: result.isCustomer,
+                        email: result.email
+                    });
                 } else {
                     done({status: 'error', message: 'Incorrect username or password'}, false);
                 }
             });
         });
 
-        Passport.deserializeUser((userIdAndRoleId: string, done) => {
-            if (userIdAndRoleId) {
-                this.UserModel.getUserByName(userIdAndRoleId).then((result) => {
+        Passport.deserializeUser((user: object, done) => {
+            if (user) {
+                this.UserModel.getUserByName(user['username']).then((result) => {
                     if (result) {
-                        done(null, true);
+                        done(null, {
+                            id: result.get('id'),
+                            username: result.get('username'),
+                            isCustomer: result.get('isCustomer'),
+                            email: result.get('email')
+                        });
                     } else {
                         done(null, false);
                     }

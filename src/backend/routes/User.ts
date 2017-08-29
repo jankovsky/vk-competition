@@ -1,34 +1,11 @@
 import {Router} from 'express';
-import User from '../models/User';
 import Authenticator from '../base/Authenticator';
 
-let UserRoute = Router(),
-    UserModel = new User();
+let UserRoute = Router();
 
 UserRoute.route('/user')
     .get(Authenticator.isAuthenticated, (req, res, next) => {
-        UserModel.getUsers().then((result) => {
-            res.send(result);
-        });
-    })
-    .post(Authenticator.isAuthenticated, (req, res, next) => {
-        let params = req.body;
-
-        if (params.id) {
-            UserModel.editUser(params.id, {
-                firstname: params.firstname,
-                phone: params.phone
-            }).then((result) => {
-                res.send(result);
-            });
-        }
-    });
-
-UserRoute.route('/user/:id')
-    .get(Authenticator.isAuthenticated, (req, res, next) => {
-        UserModel.getUserById(req.params.id).then((result) => {
-            res.send(result);
-        });
+        res.status(200).json(req.user);
     });
 
 export default UserRoute;

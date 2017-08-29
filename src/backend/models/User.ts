@@ -74,14 +74,6 @@ export default class User {
         });
     };
 
-    public getUserByName (username: string) {
-        return this.user.find({
-            where: {
-                username: username
-            }
-        });
-    };
-
     public getUserById (id: number) {
         return this.user.find({
             where: {
@@ -93,13 +85,10 @@ export default class User {
         });
     }
 
-    public getUserByUserName (name: string) {
+    public getUserByName (username: string) {
         return this.user.find({
             where: {
-                name: name
-            },
-            attributes: {
-                exclude: ['password']
+                username: username
             }
         });
     }
