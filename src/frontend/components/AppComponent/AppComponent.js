@@ -15,11 +15,7 @@ class AppComponent extends React.Component {
         const {getPhotos} = this.props.headerActions;
         return (
             <div className="b-app">
-                <h1>Привет2 {user.name} !</h1>
-                <HeaderComponent year={header.year} photos={header.photos} getPhotos={getPhotos} fetching={header.fetching} />
-                <AppDescComponent />
-                <LoginForm />
-                <FooterComponent />
+                <h1>main</h1>
             </div>
         );
     }
