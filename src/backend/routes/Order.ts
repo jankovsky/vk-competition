@@ -30,4 +30,31 @@ OrderRoute.route('/order/:id')
         res.send('successfull get by id query');
     });
 
+OrderRoute.route('/orders')
+    .get(Authenticator.isAuthenticated, (req, res, next) => {
+        let dataOffset = parseInt(req.query.offset, 10),
+            dataLimit = parseInt(req.query.limit, 10);
+
+        if (dataOffset % 2 || dataLimit % 2) {
+            res.status(400).json({ status: 'error', message: 'Offset and limit must be even numbers' });
+        }
+
+        OrderModel.getOrders(dataOffset, dataLimit).then((result) => {
+            let procData = [],
+                i,
+                j;
+
+            if (result) { // обеъдинить данные из двух БД (вариант если во второй нечетно колво записей?)
+                for (j = 0; j < result['1'].length; j++) {
+                    for (i = 0; i < result['1'].length; i++) {
+                        procData.push(result[i][j]);
+                    }
+                }
+                res.status(200).json(procData);
+            } else {
+                res.send({ status: 'error', messadge: 'Some error' });
+            }
+        });
+    });
+
 export default OrderRoute;

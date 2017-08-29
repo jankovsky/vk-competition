@@ -1,6 +1,7 @@
 import * as Sequelize from 'sequelize';
 import OrdersDatabase1 from '../base/OrdersDatabase1';
 import OrdersDatabase2 from '../base/OrdersDatabase2';
+import Config from '../config';
 
 export default class Order {
 
@@ -143,5 +144,22 @@ export default class Order {
                 time: new Date().getTime()
             }).then(callback);
         }
+    }
+
+    public getOrders(offset: number, limit: number): Promise<any> {
+        let queryParams = {},
+            promisesStack = [];
+
+        if (offset) {
+            queryParams['offset'] = offset / 2;
+        } else {
+            queryParams['offset'] = 0;
+        }
+
+        queryParams['limit'] = limit ? limit / 2 : Config.basic.defaultRecordsPerPage / 2;
+console.log(queryParams);
+        promisesStack.push(this.order1.findAll(queryParams), this.order2.findAll(queryParams));
+
+        return Promise.all(promisesStack);
     }
 }

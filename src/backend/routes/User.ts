@@ -2,8 +2,8 @@ import {Router} from 'express';
 import Authenticator from '../base/Authenticator';
 import RedisDatabase from '../base/RedisDatabase';
 
-let UserRoute = Router();
-console.log(RedisDatabase.getInstance());
+let UserRoute = Router(),
+    client = RedisDatabase.getInstance();
 
 UserRoute.route('/user')
     .get(Authenticator.isAuthenticated, (req, res, next) => {

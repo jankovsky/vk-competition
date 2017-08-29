@@ -89,7 +89,9 @@ NodeJs процессами (сумарное число которых = кол
 > headText: 'string' <br />
 > text: 'string' <br />
 
+### Получить заказы
 
+> host:3333/api/orders?offset=0&limit=3
 
 
 
