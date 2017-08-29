@@ -108,10 +108,3 @@ NodeJs процессами (сумарное число которых = кол
 > x-www-form-urlencoded <br />
 > order_id: 'number' <br />
 > customer_id: 'number' <br />
-
-
-
-
-### Redis conf MacOs
-
-> nano /usr/local/etc/redis.conf
